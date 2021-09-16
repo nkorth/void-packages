@@ -1,0 +1,11 @@
+--- coldsync-3.0-pre4/doc/conduits.texi.orig	2021-09-16 17:31:14.411814446 -0400
++++ coldsync-3.0-pre4/doc/conduits.texi	2021-09-16 17:31:49.281968417 -0400
+@@ -33,7 +33,7 @@
+ 
+ @page
+ @vskip 0pt plus 1filll
+-Copyright @copyright 2000 Andrew Arensburger.
++Copyright @copyright{} 2000 Andrew Arensburger.
+ 
+ Permission is granted to make and distribute verbatim copies of
+ this manual provided the copyright notice and this permission notice

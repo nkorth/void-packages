@@ -1,0 +1,14 @@
+# Template file for 'coldsync'
+pkgname=coldsync
+version=3.0pre4
+revision=1
+build_style=gnu-configure
+hostmakedepends="bison flex perl texinfo"
+depends="perl>=5.0"
+short_desc="Tool for synchronizing Palm OS devices with Unix workstations"
+maintainer="Nathan Korth <nkorth@nkorth.com>"
+license="Artistic-1.0-Perl"
+homepage="https://www.coldsync.org"
+distfiles="https://www.coldsync.org/download/coldsync-3.0-pre4.tar.gz"
+checksum=ca32dbcd1b2d3cbce8ee4e34aafb1183fc09c3ead69d308e76454a9c4c4728c3
+wrksrc="coldsync-3.0-pre4"

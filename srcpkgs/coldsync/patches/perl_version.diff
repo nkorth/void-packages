@@ -1,0 +1,12 @@
+diff -ru coldsync-3.0-pre4-orig/perl/ColdSync/ColdSync.pm coldsync-3.0-pre4/perl/ColdSync/ColdSync.pm
+--- coldsync-3.0-pre4-orig/perl/ColdSync/ColdSync.pm	2022-03-18 23:06:14.578115736 -0400
++++ coldsync-3.0-pre4/perl/ColdSync/ColdSync.pm	2022-03-18 23:07:44.288899744 -0400
+@@ -196,7 +196,7 @@
+ 	# requires a rewrite of the corresponding lex/yacc code to accept
+ 	# quotes, though.
+ 
+-	if (defined(%HEADERS) && scalar(keys %HEADERS) > 0)
++	if (%HEADERS && scalar(keys %HEADERS) > 0)
+ 	{
+ 		my $key;
+ 		my $value;

@@ -1,0 +1,127 @@
+diff -ru coldsync-3.0-pre4-orig/coldnamed/Makefile coldsync-3.0-pre4/coldnamed/Makefile
+--- coldsync-3.0-pre4-orig/coldnamed/Makefile	2021-09-16 17:17:23.141298953 -0400
++++ coldsync-3.0-pre4/coldnamed/Makefile	2021-09-16 17:18:45.488024670 -0400
+@@ -26,8 +26,8 @@
+ include ${TOP}/Make.rules
+ 
+ install::	${PROG}
+-	${MKDIR} ${SBINDIR}
+-	${INSTALL_PROGRAM} ${PROG} ${SBINDIR}/${PROG}
++	${MKDIR} ${DESTDIR}${SBINDIR}
++	${INSTALL_PROGRAM} ${PROG} ${DESTDIR}${SBINDIR}/${PROG}
+ 
+ #manifest:
+ #	@for i in ${DISTFILES}; do \
+diff -ru coldsync-3.0-pre4-orig/conduits/Makefile coldsync-3.0-pre4/conduits/Makefile
+--- coldsync-3.0-pre4-orig/conduits/Makefile	2021-09-16 17:17:23.138298853 -0400
++++ coldsync-3.0-pre4/conduits/Makefile	2021-09-16 17:22:12.333871367 -0400
+@@ -55,18 +55,18 @@
+ 
+ install::	${CONDUITS} manifypods
+ 	@for i in ${CONDUITDIR} ${MAN1DIR}; do \
+-		echo "${MKDIR} $$i"; \
+-		${MKDIR} "$$i"; \
++		echo "${MKDIR} ${DESTDIR}$$i"; \
++		${MKDIR} "${DESTDIR}$$i"; \
+ 	done
+ 	for i in ${PERL_CONDUITS}; do \
+ 		${SED} 's:#! *[^ 	]*\(.*\):#!${PERL}\1:' \
+ 			< $$i > $$i.inst; \
+-		${INSTALL_SCRIPT} $$i.inst ${CONDUITDIR}/$$i; \
++		${INSTALL_SCRIPT} $$i.inst ${DESTDIR}${CONDUITDIR}/$$i; \
+ 		rm -f $$i.inst; \
+ 	done
+ 	@for i in ${PERL_CONDUITS}; do \
+-		echo "${INSTALL_DATA} $$i.1 ${MAN1DIR}/$$i.1"; \
+-		${INSTALL_DATA} $$i.1 ${MAN1DIR}/$$i.1; \
++		echo "${INSTALL_DATA} $$i.1 ${DESTDIR}${MAN1DIR}/$$i.1"; \
++		${INSTALL_DATA} $$i.1 ${DESTDIR}${MAN1DIR}/$$i.1; \
+ 	done
+ 
+ # This is for Emacs's benefit:
+diff -ru coldsync-3.0-pre4-orig/doc/Makefile coldsync-3.0-pre4/doc/Makefile
+--- coldsync-3.0-pre4-orig/doc/Makefile	2021-09-16 17:17:23.132298655 -0400
++++ coldsync-3.0-pre4/doc/Makefile	2021-09-16 17:20:20.012153459 -0400
+@@ -97,36 +97,36 @@
+ # one (since that's a real man file), and make symlinks for all of the
+ # others.
+ install::	coldsync.8 ${INFOFILES}
+-	-${MKDIR} ${MAN3DIR}
++	-${MKDIR} ${DESTDIR}${MAN3DIR}
+ 	@for i in ${MAN3FILES}; do \
+-		echo "${INSTALL_MAN} $$i ${MAN3DIR}/$$i"; \
+-		${INSTALL_MAN} $$i ${MAN3DIR}/$$i; \
++		echo "${INSTALL_MAN} $$i ${DESTDIR}${MAN3DIR}/$$i"; \
++		${INSTALL_MAN} $$i ${DESTDIR}${MAN3DIR}/$$i; \
+ 		set `awk '/^\.Nm/ { print $$2 } /^\.Nd/ {exit 0}' $$i`; \
+ 		echo "Synonyms for $$i are $$*"; \
+ 		shift; \
+ 		for j in "$$@"; do \
+-			echo "ln -f -s $$i ${MAN3DIR}/$$j.3"; \
+-			ln -f -s "$$i" "${MAN3DIR}/$$j.3"; \
++			echo "ln -f -s $$i ${DESTDIR}${MAN3DIR}/$$j.3"; \
++			ln -f -s "$$i" "${DESTDIR}${MAN3DIR}/$$j.3"; \
+ 		done; \
+ 	done
+-	-${MKDIR} ${MAN8DIR}
++	-${MKDIR} ${DESTDIR}${MAN8DIR}
+ 	@for i in ${MAN8FILES}; do \
+-		echo ${INSTALL_MAN} $$i ${MAN8DIR}/$$i; \
+-		${INSTALL_MAN} $$i ${MAN8DIR}/$$i; \
++		echo ${INSTALL_MAN} $$i ${DESTDIR}${MAN8DIR}/$$i; \
++		${INSTALL_MAN} $$i ${DESTDIR}${MAN8DIR}/$$i; \
+ 		set `awk '/^\.Nm/ { print $$2 } /^\.Nd/ {exit 0}' $$i`; \
+ 		echo "Synonyms for $$i are $$*"; \
+ 		shift; \
+ 		for j in "$$@"; do \
+-			echo "ln -f -s $$i ${MAN8DIR}/$$j.8"; \
+-			ln -f -s "$$i" "${MAN8DIR}/$$j.8"; \
++			echo "ln -f -s $$i ${DESTDIR}${MAN8DIR}/$$j.8"; \
++			ln -f -s "$$i" "${DESTDIR}${MAN8DIR}/$$j.8"; \
+ 		done; \
+ 	done
+-	-${MKDIR} ${SYSCONFDIR}
+-	${INSTALL_DATA} sample.coldsync.rc ${SYSCONFDIR}/sample.coldsync.rc
+-	${MKDIR} ${INFODIR}
++	-${MKDIR} ${DESTDIR}${SYSCONFDIR}
++	${INSTALL_DATA} sample.coldsync.rc ${DESTDIR}${SYSCONFDIR}/sample.coldsync.rc
++	${MKDIR} ${DESTDIR}${INFODIR}
+ 	@for file in ${INFOFILES} ${EXTRA_INFOFILES}; do \
+-		echo "${INSTALL_DATA} $${file} ${INFODIR}/$${file}"; \
+-		${INSTALL_DATA} $${file} ${INFODIR}/$${file}; \
++		echo "${INSTALL_DATA} $${file} ${DESTDIR}${INFODIR}/$${file}"; \
++		${INSTALL_DATA} $${file} ${DESTDIR}${INFODIR}/$${file}; \
+ 	done
+ 
+ dvi:	${DVIFILES}
+diff -ru coldsync-3.0-pre4-orig/i18n/Makefile coldsync-3.0-pre4/i18n/Makefile
+--- coldsync-3.0-pre4-orig/i18n/Makefile	2021-09-16 17:17:23.136298787 -0400
++++ coldsync-3.0-pre4/i18n/Makefile	2021-09-16 17:21:01.041511553 -0400
+@@ -92,10 +92,10 @@
+ install-i18n-yes:	${MOFILES}
+ 	@langs="${LANGS}"; \
+ 	for lang in $$langs; do \
+-		echo "${MKDIR} ${LOCALEDIR}/$$lang/LC_MESSAGES"; \
+-		${MKDIR} "${LOCALEDIR}/$$lang/LC_MESSAGES"; \
++		echo "${MKDIR} ${DESTDIR}${LOCALEDIR}/$$lang/LC_MESSAGES"; \
++		${MKDIR} "${DESTDIR}${LOCALEDIR}/$$lang/LC_MESSAGES"; \
+ 		${INSTALL_DATA} "$$lang.mo" \
+-			"${LOCALEDIR}/$$lang/LC_MESSAGES/${PACKAGE}.mo"; \
++			"${DESTDIR}${LOCALEDIR}/$$lang/LC_MESSAGES/${PACKAGE}.mo"; \
+ 	done
+ 
+ # Do nothing.
+diff -ru coldsync-3.0-pre4-orig/src/Makefile coldsync-3.0-pre4/src/Makefile
+--- coldsync-3.0-pre4-orig/src/Makefile	2021-09-16 17:17:23.134298721 -0400
++++ coldsync-3.0-pre4/src/Makefile	2021-09-16 17:21:28.753428832 -0400
+@@ -92,8 +92,8 @@
+ 	${MKDEP} ${CPPFLAGS} ${C_SRCS} ${CXX_INCLUDEDIRS} ${CXX_SRCS}
+ 
+ install::	${CXXPROG}
+-	${MKDIR} ${BINDIR}
+-	${INSTALL_PROGRAM} ${CXXPROG} ${BINDIR}/${CXXPROG}
++	${MKDIR} ${DESTDIR}${BINDIR}
++	${INSTALL_PROGRAM} ${CXXPROG} ${DESTDIR}${BINDIR}/${CXXPROG}
+ 
+ #manifest:
+ #	@for i in ${DISTFILES}; do \

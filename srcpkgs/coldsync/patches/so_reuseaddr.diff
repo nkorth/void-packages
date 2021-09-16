@@ -1,0 +1,14 @@
+--- coldsync-3.0-pre4/libpconn/PConnection_net.c.orig	2021-09-24 22:51:32.706267569 -0400
++++ coldsync-3.0-pre4/libpconn/PConnection_net.c	2021-09-24 23:01:21.244818239 -0400
+@@ -376,6 +376,11 @@
+ 	IO_TRACE(5)
+ 		fprintf(stderr, "TCP socket == %d\n", pconn->fd);
+ 
++	/* Setting SO_REUSEADDR avoids "bind: Address already in use" when
++	 * netsyncs are attempted less than a minute or so apart (such as
++	 * when testing conduits.) It's only required on the TCP socket. */
++	setsockopt(pconn->fd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
++
+ 	service = getservbyname("netsync", "tcp");
+ 				/* Try to get the entry for "netsync" from
+ 				 * /etc/services

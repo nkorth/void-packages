@@ -1,0 +1,14 @@
+--- coldsync-3.0-pre4/doc/Makefile.orig	2021-09-16 17:40:25.259020250 -0400
++++ coldsync-3.0-pre4/doc/Makefile	2021-09-16 17:40:42.497589944 -0400
+@@ -8,11 +8,6 @@
+ TEXIFILES =	conduits.texi
+ 
+ INFOFILES =	${TEXIFILES:.texi=.info}
+-# EXTRA_INFOFILES is split off from INFOFILES because under DU, when there
+-# are no existing foo.info-* files, /bin/sh just expands the glob to the
+-# string "foo.info-*". Then 'make' complains that it doesn't know how to
+-# build this file.
+-EXTRA_INFOFILES =	${TEXIFILES:.texi=.info-*}
+ DVIFILES =	${TEXIFILES:.texi=.dvi}
+ PSFILES =	${TEXIFILES:.texi=.ps}
+ PDFFILES =	${TEXIFILES:.texi=.pdf}
