@@ -1,0 +1,17 @@
+# Template file for 'todotxt'
+pkgname=todotxt
+version=2.12.0
+revision=1
+short_desc="CLI for managing your todo.txt file"
+maintainer="Nathan Korth <nkorth@nkorth.com>"
+license="GPL-3.0-only"
+homepage="https://github.com/todotxt/todo.txt-cli"
+distfiles="${homepage}/releases/download/v${version}/todo.txt_cli-${version}.tar.gz"
+checksum=e6da9b2c8022658c514a0b1613b3eae52f6240bf2b3494a83dae713ea445d13e
+wrksrc="todo.txt_cli-${version}"
+
+do_install() {
+	vinstall todo.sh 755 usr/bin/
+	vinstall todo.cfg 644 etc/
+	vcompletion todo_completion bash todo.sh
+}
